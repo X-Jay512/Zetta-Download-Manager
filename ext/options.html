@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ZDM options</title>
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #12121a;
+      color: #f2f2f2;
+      font: 14px/1.45 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    main {
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 32px 20px 48px;
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 20px;
+      font-weight: 650;
+    }
+    .lead {
+      margin: 0 0 22px;
+      color: #9a9aa3;
+      font-size: 13px;
+    }
+    section {
+      margin: 0 0 18px;
+      padding: 14px;
+      background: #1a1a26;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+    }
+    h2 {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 650;
+      color: #c8c8d0;
+    }
+    label {
+      display: block;
+      margin: 0 0 8px;
+      cursor: pointer;
+    }
+    label:last-child { margin-bottom: 0; }
+    input { margin-right: 8px; }
+    .hint {
+      display: block;
+      margin: 4px 0 6px 0;
+      color: #9a9aa3;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    label .hint {
+      margin: 2px 0 0 24px;
+    }
+    .status {
+      min-height: 1.2em;
+      color: #8fd18f;
+      font-size: 12px;
+    }
+    .chip-cloud { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+    .chip {
+      border: 1px solid rgba(255,255,255,0.16);
+      background: #12121a;
+      color: #9a9aa3;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-family: inherit;
+      cursor: pointer;
+      text-transform: lowercase;
+    }
+    .chip.on {
+      color: #fff;
+      border-color: #6ea2ff;
+      background: #2f5fbe;
+    }
+    .chip-cloud.delete-mode .chip {
+      background: #4a151b !important;
+      border-color: #ff4d4f !important;
+      color: #ffb4b4 !important;
+    }
+    .chip-cloud.delete-mode .chip:hover {
+      background: #781c22 !important;
+      border-color: #ff7875 !important;
+      color: #ffffff !important;
+    }
+    .btn-delete-mode {
+      border: 1px solid rgba(255, 77, 79, 0.4) !important;
+      background: #2a181c !important;
+      color: #ff7875 !important;
+    }
+    .btn-delete-mode:hover {
+      background: #3d1c22 !important;
+      border-color: #ff4d4f !important;
+    }
+    .btn-delete-mode.done {
+      border: 1px solid rgba(110, 162, 255, 0.4) !important;
+      background: #1c2a44 !important;
+      color: #6ea2ff !important;
+    }
+    .btn-delete-mode.done:hover {
+      background: #273b61 !important;
+      border-color: #6ea2ff !important;
+    }
+    .row { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+    .row input { margin-right: 0; }
+    .row input[type="text"], .row select, .row input[type="number"] {
+      background: #12121a;
+      color: inherit;
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 6px;
+      padding: 4px 8px;
+    }
+    .row button, .head button {
+      border: 1px solid rgba(255,255,255,0.16);
+      background: #242433;
+      color: inherit;
+      border-radius: 6px;
+      padding: 4px 10px;
+      cursor: pointer;
+    }
+    .head { display: flex; justify-content: space-between; align-items: center; }
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 6px;
+      background: #12121a;
+      color: inherit;
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>ZDM</h1>
+    <p class="lead">Capture choices are saved in ZDM. The page button updates when you open its tab.</p>
+    <p class="status" id="app-status"></p>
+    <section>
+      <h2>Capture</h2>
+      <label>
+        <input type="checkbox" id="capture">
+        Catch downloads from the browser
+        <span class="hint">A file the browser starts saving is handed to ZDM when its type is listed below.</span>
+      </label>
+      <label>
+        <input type="checkbox" id="find-media">
+        Find media on the page
+        <span class="hint">Notice video and audio the page requests, even when there is no download link.</span>
+      </label>
+      <label>
+        <input type="checkbox" id="add-silently">
+        Add downloads silently
+        <span class="hint">Add the file to the list without opening the download window.</span>
+      </label>
+      <label>
+        <input type="checkbox" id="context-menu">
+        Right-click Send to ZDM
+        <span class="hint">Show ZDM in the browser context menu for links and media.</span>
+      </label>
+      <div class="head">
+        <h2>File types</h2>
+        <button type="button" id="ext-default">Default</button>
+      </div>
+      <span class="hint">Click a type to turn it on or off.</span>
+      <div class="chip-cloud" id="ext-cloud"></div>
+      <div class="row">
+        <input type="text" id="ext-add-input" placeholder="Add extension">
+        <button type="button" id="ext-add-btn">Add</button>
+        <button type="button" id="ext-delete-btn" class="btn-delete-mode">Delete</button>
+      </div>
+      <div class="head" style="margin-top: 18px;">
+        <h2>Ignore these hosts</h2>
+        <button type="button" id="sites-default">Default</button>
+      </div>
+      <span class="hint">Exclude entire domains or websites completely so ZDM never catches downloads from them. One host per line. A star is allowed, such as *.update.microsoft.com</span>
+      <textarea id="hosts" rows="5"></textarea>
+      <div class="head" style="margin-top: 18px;">
+        <h2>Ignore URL prefixes</h2>
+      </div>
+      <span class="hint">Exclude specific subfolders or URL paths on a site (such as ads or previews) while still downloading other files from it. One address per line. A star is allowed.</span>
+      <textarea id="ignored" rows="3" placeholder="https://cdn.example.com/ads/"></textarea>
+      <div class="head" style="margin-top: 18px;">
+        <h2>Sort these sites</h2>
+      </div>
+      <span class="hint">Pick a folder, then one site per line. A matching address uses that folder even when the file name has no extension.</span>
+      <div class="row">
+        <select id="sort-kind">
+          <option value="video">Video</option>
+          <option value="music">Sounds</option>
+          <option value="programs">Programs</option>
+          <option value="compressed">Compressed</option>
+          <option value="documents">Documents</option>
+          <option value="images">Images</option>
+        </select>
+      </div>
+      <textarea id="sort-sites" rows="3" placeholder="youtube.com"></textarea>
+      <label>
+        Ignore files smaller than
+        <span class="row size-row">
+          <input type="number" id="min-kb" min="0" value="0">
+          <span>KB</span>
+          <select id="min-preset">
+            <option value="custom">Custom / No limit</option>
+            <option value="102400">100 MB</option>
+            <option value="512000">500 MB</option>
+            <option value="1048576">1 GB</option>
+          </select>
+        </span>
+      </label>
+    </section>
+    <section>
+      <h2>Quality list</h2>
+      <label>
+        <input type="radio" name="qualityMode" value="full">
+        Full
+        <span class="hint">Every bitrate stays in the list, with its kbps, with audio selection.</span>
+      </label>
+      <label>
+        <input type="radio" name="qualityMode" value="average">
+        Average
+        <span class="hint">Best bitrate for each resolution and format (e.g. 720p MP4 & 720p WebM), with audio selection.</span>
+      </label>
+      <label>
+        <input type="radio" name="qualityMode" value="simple">
+        Simple
+        <span class="hint">Show video quality only.</span>
+      </label>
+    </section>
+    <section>
+      <h2>Frame rate</h2>
+      <label>
+        <input type="radio" name="fpsDisplay" value="30">
+        30 fps and above
+      </label>
+      <label>
+        <input type="radio" name="fpsDisplay" value="60">
+        60 fps and above
+      </label>
+      <label>
+        <input type="radio" name="fpsDisplay" value="off">
+        Off
+      </label>
+    </section>
+    <p class="status" id="status"></p>
+  </main>
+  <script src="options.js"></script>
+</body>
+</html>

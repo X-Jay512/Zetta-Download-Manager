@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Waiting for a new address</title>
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/theme.js"></script>
+  <style>
+    body { margin: 0; background: var(--bg-secondary); color: var(--text-primary); }
+    .sheet { padding: 18px 18px 14px; display: flex; flex-direction: column; gap: 12px; }
+    p { margin: 0; font-size: 13px; line-height: 1.45; color: var(--text-secondary); }
+    .name { color: var(--text-primary); font-weight: 600; word-break: break-word; }
+    .actions { display: flex; justify-content: flex-end; }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <p>ZDM is waiting for a new address to resume:</p>
+    <div class="name" id="file-name"></div>
+    <div class="actions">
+      <button class="btn btn-secondary" id="btn-stop" type="button">Stop waiting</button>
+    </div>
+  </div>
+  <script src="js/refresh-wait.js"></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+{
+  "name": "zetta-download-manager",
+  "version": "0.5.0",
+  "description": "High-speed download manager with video sniffing & browser integration",
+  "main": "app/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "cross-env NODE_ENV=development electron .",
+    "build": "electron-builder",
+    "dist": "electron-builder --win",
+    "pack": "electron-builder --dir",
+    "lint": "eslint .",
+    "install-host": "node scripts/install-host.js",
+    "pack:ext": "node scripts/pack-ext.js"
+  },
+  "author": "XJay5",
+  "license": "MIT",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "electron": "^32.0.0",
+    "electron-builder": "^25.0.0",
+    "eslint": "^9.0.0"
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.11",
+    "uuid": "^10.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/X-Jay512/Zetta-Download-Manager.git"
+  },
+  "build": {
+    "appId": "com.xjay5.zetta-dm",
+    "productName": "Zetta Download Manager",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "X-Jay512",
+        "repo": "Zetta-Download-Manager"
+      }
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "asar": true,
+    "asarUnpack": [
+      "core/capture/*.node",
+      "core/engine/*.node"
+    ],
+    "files": [
+      "app/**/*",
+      "core/**/*",
+      "!core/capture/*.node.old",
+      "src/**/*",
+      "package.json",
+      "!**/node_modules/*/{CHANGELOG.md,README.md,readme.md,test,tests,__tests__,*.test.js,*.spec.js}",
+      "!**/*.map"
+    ],
+    "compression": "maximum",
+    "electronLanguages": [
+      "en-US",
+      "ar"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "src/assets/icons/app.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Zetta Download Manager",
+      "runAfterFinish": true,
+      "installerIcon": "src/assets/icons/app.ico",
+      "uninstallerIcon": "src/assets/icons/app.ico",
+      "include": "scripts/nsis-hooks.nsh"
+    },
+    "extraResources": [
+      {
+        "from": "bin/ffmpeg.exe",
+        "to": "bin/ffmpeg.exe"
+      },
+      {
+        "from": "bin/yt-dlp.exe",
+        "to": "bin/yt-dlp.exe"
+      },
+      {
+        "from": "ext/",
+        "to": "ext/"
+      },
+      {
+        "from": "ext f/",
+        "to": "ext f/"
+      }
+    ]
+  }
+}

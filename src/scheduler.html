@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scheduler - Zetta Download Manager</title>
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/studio.css">
+  <script src="js/theme.js"></script>
+  <style>
+    body {
+      background: var(--bg-secondary);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      padding-top: 34px !important;
+      box-sizing: border-box;
+      margin: 0;
+      color: var(--text-primary);
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      z-index: 100000;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 34px !important;
+      background: var(--bg-secondary) !important;
+      border-bottom: 1px solid var(--border);
+      box-sizing: border-box;
+      -webkit-app-region: drag;
+    }
+    .scheduler-window-studio {
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      width: 100% !important;
+      height: 100% !important;
+      max-width: 100% !important;
+      max-height: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      background: transparent !important;
+      flex: 1;
+      min-height: 0;
+    }
+    .scheduler-window-studio .studio-top {
+      padding: 10px 16px;
+      -webkit-app-region: no-drag;
+    }
+    .scheduler-window-studio .studio-x {
+      display: none;
+    }
+  </style>
+</head>
+<body data-window="scheduler">
+  <div class="studio scheduler-studio scheduler-window-studio" role="dialog" aria-label="Scheduler">
+    <header class="studio-top">
+      <div class="studio-title">
+        <img src="assets/ui/scheduler.png" alt="">
+        <div>
+          <strong>Scheduler</strong>
+          <span>When queues run, and when they stop</span>
+        </div>
+      </div>
+      <button class="studio-x" id="scheduler-x" type="button" aria-label="Close">x</button>
+    </header>
+    <div class="scheduler-body">
+      <aside class="scheduler-rail">
+        <div class="rail-label">Queues</div>
+        <div id="scheduler-queues"></div>
+        <div class="rail-actions">
+          <button class="btn btn-secondary" id="scheduler-new" type="button">New queue</button>
+          <button class="btn btn-secondary" id="scheduler-delete" type="button">Delete</button>
+        </div>
+        <form class="rail-name" id="scheduler-name-form" hidden>
+          <input id="scheduler-name-input" type="text" placeholder="Queue name" maxlength="40">
+          <button class="btn btn-primary" type="submit">Add</button>
+        </form>
+      </aside>
+      <section class="scheduler-main">
+        <div class="scheduler-head">
+          <h2 id="scheduler-heading">General queue</h2>
+          <div class="studio-tabs" id="scheduler-tabs">
+            <button type="button" data-tab="schedule" class="on">Schedule</button>
+            <button type="button" data-tab="files">Files in the queue</button>
+          </div>
+        </div>
+        <div id="scheduler-pane" class="scheduler-pane"></div>
+        <div class="help-card" id="scheduler-help" hidden></div>
+      </section>
+    </div>
+    <footer class="studio-foot">
+      <button class="btn btn-primary" id="scheduler-start" type="button">Start now</button>
+      <button class="btn btn-secondary" id="scheduler-stop" type="button">Stop</button>
+      <span class="foot-gap"></span>
+      <button class="btn btn-secondary" id="scheduler-help-btn" type="button">Help</button>
+      <button class="btn btn-secondary" id="scheduler-apply" type="button">Apply</button>
+      <button class="btn btn-secondary" id="scheduler-close" type="button">Close</button>
+    </footer>
+  </div>
+
+  <script src="js/scheduler.js"></script>
+</body>
+</html>

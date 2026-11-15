@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Build outputs and packaged apps
+dist/
+build/
+*.exe
+bin/ffmpeg.exe
+bin/yt-dlp.exe
+
+# Sensitive backend, engine & capture
+native/
+core/engine/
+core/capture/
+app/ipc-handlers.js
+Start-ZDM.bat
+docs/
+*.node
+*.node.old
+*.protected.dll
+
+# Logs & temp
+*.log
+.DS_Store
+Thumbs.db

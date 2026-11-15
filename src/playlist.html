@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add playlist</title>
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/theme.js"></script>
+  <style>
+    body { margin: 0; background: var(--bg-secondary); color: var(--text-primary); height: 100vh; overflow: hidden; }
+    .sheet { height: 100%; display: flex; flex-direction: column; gap: 8px; padding: 12px; box-sizing: border-box; }
+    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    input[type="text"], select {
+      background: var(--bg-primary); color: var(--text-primary);
+      border: 1px solid var(--border-light); border-radius: 4px; font: 12px inherit; padding: 5px 8px;
+    }
+    input[type="text"] { flex: 1; min-width: 180px; }
+    label { display: flex; align-items: center; gap: 4px; font-size: 12px; white-space: nowrap; }
+    .list { flex: 1; overflow: auto; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-primary); }
+    .cols, .item {
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr) 108px 108px 78px 52px;
+      gap: 6px;
+      align-items: center;
+      padding: 6px 8px;
+      font-size: 12px;
+    }
+    .cols { position: sticky; top: 0; background: var(--bg-tertiary); color: var(--text-muted); font-weight: 600; border-bottom: 1px solid var(--border); }
+    .item { border-bottom: 1px solid var(--border); }
+    .item .title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .item select { width: 100%; }
+    .cols span:nth-child(5),
+    .cols span:nth-child(6),
+    .item .meta { color: var(--text-secondary); text-align: center; }
+    .status { min-height: 16px; font-size: 12px; color: var(--text-secondary); }
+    .actions { display: flex; justify-content: flex-end; gap: 8px; }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <div class="row">
+      <input type="text" id="playlist-url" placeholder="YouTube playlist or page link" spellcheck="false">
+      <button class="btn btn-secondary" id="btn-load" type="button">Load</button>
+      <label>Video
+        <select id="video-quality"><option value="max">Highest</option></select>
+      </label>
+      <label>Audio
+        <select id="audio-quality"><option value="max">Highest</option></select>
+      </label>
+    </div>
+    <div class="row">
+      <label><input type="checkbox" id="check-all"> All</label>
+      <label><input type="checkbox" id="only-audio"> Only audio</label>
+      <label>Queue
+        <select id="queue-target">
+          <option value="">Start now</option>
+        </select>
+      </label>
+      <input type="text" id="new-queue-name" placeholder="New queue name" hidden>
+    </div>
+    <div class="list" id="video-list"></div>
+    <div class="status" id="status"></div>
+    <div class="actions">
+      <button class="btn btn-primary" id="btn-download" type="button">Download</button>
+      <button class="btn btn-secondary" id="btn-close" type="button">Close</button>
+    </div>
+  </div>
+  <script src="js/playlist.js"></script>
+</body>
+</html>

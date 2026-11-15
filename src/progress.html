@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Download</title>
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/theme.js"></script>
+  <style>
+    body { margin: 0; background: var(--bg-card) !important; color: var(--text-primary); overflow: hidden; }
+    body::before { background: var(--bg-card) !important; border-bottom: none !important; }
+    .sheet { padding: 8px 10px 10px; display: flex; flex-direction: column; gap: 8px; }
+    .tabs { display: flex; gap: 4px; }
+    .tabs button {
+      background: transparent; color: var(--text-secondary); border: none;
+      padding: 4px 10px; font: 12px inherit; cursor: pointer; border-radius: 4px;
+    }
+    .tabs button:hover { background: var(--bg-hover); color: var(--text-primary); }
+    .tabs button.active { background: var(--bg-active); color: var(--text-primary); font-weight: 600; }
+    .panel {
+      border: none;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: transparent;
+      padding: 10px 2px;
+      height: 170px;
+      min-height: 170px;
+      box-sizing: border-box;
+    }
+    .name-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .file-name {
+      flex: 1; min-width: 0; font-size: 13px; font-weight: 650;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .copy-link {
+      width: 26px; height: 26px; padding: 0; display: inline-flex;
+      align-items: center; justify-content: center; flex-shrink: 0;
+      background: transparent; border: 0; border-radius: 6px;
+      color: var(--text-primary); cursor: pointer;
+    }
+    .copy-link:hover { background: var(--bg-hover); }
+    .copy-link svg { width: 16px; height: 16px; display: block; }
+    .copy-link.copied { color: var(--accent); }
+    .grid { display: grid; grid-template-columns: 110px 1fr; gap: 2px 8px; font-size: 12px; }
+    .grid .k { color: var(--text-secondary); }
+    .grid .v { color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .row { display: flex; align-items: center; gap: 8px; font-size: 12px; margin: 4px 0; }
+    .row input[type="number"] { width: 72px; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-light); padding: 2px 6px; }
+    .path { flex: 1; background: var(--bg-primary); border: 1px solid var(--border-light); padding: 2px 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .note { font-size: 11px; color: var(--text-muted); margin: 4px 0 6px; }
+    .checks { display: flex; flex-direction: column; gap: 3px; font-size: 12px; }
+    .checks label.locked { opacity: 0.45; }
+    select { background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-light); font: 12px inherit; padding: 2px 6px; border-radius: 4px; }
+    select:disabled, input:disabled { opacity: 0.45; cursor: not-allowed; }
+    .bar {
+      height: 18px; background: var(--bg-active); border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+    }
+    .bar > span { display: block; height: 100%; width: 0; background: var(--success); }
+    .bar.paused > span,
+    .bar > span.paused { background: var(--warning, #ffab40); }
+    .actions { display: flex; align-items: center; gap: 8px; }
+    .actions .spacer { flex: 1; }
+    .btn-toggle-details {
+      width: 30px; height: 26px; padding: 0; display: inline-flex;
+      align-items: center; justify-content: center;
+      background: var(--bg-tertiary); color: var(--text-primary);
+      border: 1px solid var(--border-light); border-radius: 4px; cursor: pointer;
+      flex-shrink: 0;
+    }
+    .btn-toggle-details:hover { background: var(--bg-hover); }
+    .btn-toggle-details svg { width: 14px; height: 14px; display: block; transition: transform 0.2s ease; }
+    .btn-toggle-details.open svg { transform: rotate(180deg); }
+    .win-btn {
+      width: 96px; min-width: 96px; height: 26px; box-sizing: border-box;
+      background: var(--bg-tertiary); color: var(--text-primary);
+      border: 1px solid var(--border-light); border-radius: 4px; font: 12px inherit; cursor: pointer;
+    }
+    #cancel-ask {
+      position: fixed; inset: 0; z-index: 20;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(0, 0, 0, 0.45);
+    }
+    #cancel-ask[hidden] { display: none; }
+    .ask-card {
+      width: 420px; padding: 14px;
+      background: var(--bg-secondary); color: var(--text-primary);
+      border: 1px solid var(--border); border-radius: 8px;
+    }
+    .ask-card p { margin: 0 0 10px; font-size: 12px; line-height: 1.45; }
+    .ask-remember {
+      display: flex; align-items: center; gap: 6px;
+      margin: 0 0 12px; font-size: 12px; cursor: pointer;
+    }
+    .ask-actions { display: flex; justify-content: flex-end; gap: 8px; }
+    .ask-actions .win-btn { width: 124px; min-width: 124px; }
+    .win-btn:hover { background: var(--bg-hover); }
+    .caption { font-size: 12px; text-align: center; color: var(--text-secondary); }
+    .segbar { display: flex; height: 14px; background: var(--bg-active); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+    .seg { position: relative; height: 100%; flex: 1 1 0; background: var(--bg-active); min-width: 0; }
+    .seg + .seg { box-shadow: inset 1px 0 0 var(--bg-secondary); }
+    .seg > span { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--accent); }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; background: transparent; }
+    th, td { box-sizing: border-box; height: 22px; border: none; padding: 0 4px; line-height: 20px; text-align: left; }
+    th { background: transparent; font-weight: 600; border-bottom: 1px solid var(--border); }
+    .table-wrap { height: 132px; min-height: 132px; max-height: 132px; overflow: auto; border: none; }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <div class="tabs">
+      <button type="button" class="active" data-tab="status">Progress</button>
+      <button type="button" data-tab="limit">Speed</button>
+      <button type="button" data-tab="done">After download</button>
+    </div>
+
+    <div class="panel" id="panel-status">
+      <div class="name-row">
+        <div class="file-name" id="file-name"></div>
+        <button type="button" class="copy-link" id="btn-copy-link" title="Copy link" aria-label="Copy link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+            <path d="M6 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="grid">
+        <div class="k">Status</div><div class="v" id="state">Downloading</div>
+        <div class="k" id="size-label">File size</div><div class="v" id="file-size">—</div>
+        <div class="k" id="received-label">Downloaded</div><div class="v" id="received">—</div>
+        <div class="k">Speed</div><div class="v" id="speed">—</div>
+        <div class="k">Time left</div><div class="v" id="left">—</div>
+        <div class="k">Can resume</div><div class="v" id="resume">Yes</div>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-limit" hidden>
+      <div class="grid">
+        <div class="k">Speed</div><div class="v" id="limit-speed">—</div>
+      </div>
+      <div class="row" style="margin-top: 12px; justify-content: space-between; align-items: center;">
+        <div>
+          <div style="font-weight: 500;">Thread count</div>
+          <div class="note" id="thread-note" style="margin: 2px 0 0;">Use Global Settings</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <input type="number" id="thread-count" min="0" max="32" value="0" style="width: 68px;">
+          <span style="font-size: 11px; min-width: 28px; visibility: hidden;">KB/s</span>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 12px; justify-content: space-between; align-items: center;">
+        <label class="row" style="margin: 0; cursor: pointer; gap: 6px;">
+          <input type="checkbox" id="use-limit">
+          <span style="font-weight: 500;">Speed limit</span>
+        </label>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <input type="number" id="limit-kbps" min="1" value="10" disabled style="width: 68px;">
+          <span style="font-size: 11px; color: var(--text-secondary); min-width: 28px;">KB/s</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-done" hidden>
+      <div class="row" style="margin-top: 6px;">
+        <label class="row" style="margin: 0; cursor: pointer; gap: 6px;">
+          <input type="checkbox" id="show-dialog" checked>
+          <span>Tell me when the file is ready</span>
+        </label>
+      </div>
+      <div class="row" style="margin-top: 12px; gap: 8px; align-items: center;">
+        <label class="row" style="margin: 0; cursor: pointer; gap: 6px;">
+          <input type="checkbox" id="opt-power">
+          <span>Action when finished:</span>
+        </label>
+        <select id="power-action" disabled>
+          <option value="shutdown">Shut down</option>
+          <option value="sleep">Sleep</option>
+          <option value="restart">Restart</option>
+          <option value="lock">Lock</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="bar"><span id="meter-fill"></span></div>
+
+    <div class="actions">
+      <button type="button" class="btn-toggle-details open" id="btn-hide" title="Hide connections" aria-label="Hide connections">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <span class="spacer"></span>
+      <button type="button" class="win-btn" id="btn-main">Pause</button>
+      <button type="button" class="win-btn" id="btn-cancel">Cancel</button>
+    </div>
+
+    <div id="details">
+      <div class="caption" id="conn-caption">Each connection</div>
+      <div class="segbar" id="segbar"></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>N.</th><th>Downloaded</th><th>Info</th></tr></thead>
+          <tbody id="conn-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div id="cancel-ask" hidden>
+    <div class="ask-card">
+      <p>Keep pauses the download and leaves the pieces. Cancel download deletes the pieces and leaves the file in the list as not downloaded.</p>
+      <label class="ask-remember">
+        <input type="checkbox" id="cancel-remember">
+        <span>Remember my choice and don't show again</span>
+      </label>
+      <div class="ask-actions">
+        <button type="button" class="win-btn" id="cancel-yes">Cancel download</button>
+        <button type="button" class="win-btn" id="cancel-keep">Keep</button>
+      </div>
+    </div>
+  </div>
+  <script src="js/progress.js"></script>
+</body>
+</html>

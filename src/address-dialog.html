@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enter new address to download</title>
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/theme.js"></script>
+  <style>
+    body {
+      background: var(--bg-secondary);
+      height: 100vh;
+      overflow: hidden;
+      margin: 0;
+    }
+    .sheet {
+      padding: 14px 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .addr-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .addr-label {
+      width: 62px;
+      padding-top: 5px;
+      font-size: 12px;
+      color: var(--text-primary);
+      flex-shrink: 0;
+    }
+    .combo {
+      position: relative;
+      flex: 1;
+      min-width: 0;
+    }
+    .combo input {
+      width: 100%;
+      height: 26px;
+      padding: 2px 22px 2px 8px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-light);
+      border-radius: 2px;
+      color: var(--text-primary);
+      font-size: 12px;
+      font-family: inherit;
+    }
+    .combo input:focus { outline: none; border-color: var(--accent); }
+    .combo-btn {
+      position: absolute;
+      right: 1px;
+      top: 1px;
+      width: 20px;
+      height: 24px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 10px;
+      padding: 0;
+    }
+    .combo-btn:hover { color: var(--text-primary); }
+    .side-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 84px;
+      flex-shrink: 0;
+    }
+    .win-btn {
+      height: 26px;
+      border: 1px solid var(--border-light);
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 12px;
+      font-family: inherit;
+    }
+    .win-btn:hover { background: var(--bg-hover); }
+    #btn-ok { border-color: var(--accent-dim); }
+    #btn-ok:focus { outline: 1px solid var(--accent); outline-offset: 1px; }
+    .section-line {
+      height: 1px;
+      background: var(--border-light);
+      margin: 2px 0 0;
+    }
+    .auth-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .check-line {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 0 0 auto;
+      font-size: 12px;
+      color: var(--text-primary);
+      white-space: nowrap;
+      user-select: none;
+    }
+    .auth-field {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      min-width: 0;
+      font-size: 12px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+    .auth-field input {
+      flex: 1;
+      min-width: 0;
+      width: 100%;
+      height: 24px;
+      padding: 2px 8px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text-primary);
+      font-size: 12px;
+      font-family: inherit;
+    }
+    .auth-field input:focus { outline: none; border-color: var(--accent); }
+    .auth-field input:disabled {
+      opacity: 0.45;
+      background: var(--bg-tertiary);
+    }
+    .addr-error {
+      min-height: 14px;
+      margin: 0;
+      font-size: 11px;
+      color: var(--danger);
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <div class="addr-row">
+      <div class="addr-label">Address</div>
+      <div class="combo">
+        <input type="text" id="input-address" spellcheck="false" autocomplete="off">
+        <button type="button" class="combo-btn" id="btn-history" aria-label="Recent addresses">&#9662;</button>
+      </div>
+      <div class="side-btns">
+        <button type="button" class="win-btn" id="btn-ok">OK</button>
+        <button type="button" class="win-btn" id="btn-cancel">Cancel</button>
+      </div>
+    </div>
+    <div class="section-line"></div>
+    <div class="auth-row">
+      <label class="check-line">
+        <input type="checkbox" id="use-auth">
+        <span>Use authorization</span>
+      </label>
+      <label class="auth-field">Login <input type="text" id="input-login" disabled autocomplete="off"></label>
+      <label class="auth-field">Password <input type="password" id="input-password" disabled autocomplete="off"></label>
+    </div>
+    <p id="addr-error" class="addr-error"></p>
+  </div>
+  <script src="js/address-dialog.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Link expired</title>
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/theme.js"></script>
+  <style>
+    body { margin: 0; background: var(--bg-secondary); color: var(--text-primary); }
+    .sheet { padding: 16px 16px 14px; display: flex; flex-direction: column; gap: 12px; }
+    p { margin: 0; font-size: 13px; line-height: 1.45; color: var(--text-secondary); }
+    .name { color: var(--text-primary); font-weight: 600; word-break: break-word; }
+    .actions { display: flex; justify-content: flex-end; gap: 8px; }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <p>Cannot resume downloading the file:</p>
+    <div class="name" id="file-name"></div>
+    <p>The address may no longer be valid, or the session has expired. ZDM will open the page where this download was captured. Start the same file from your browser again, and ZDM will catch the new address and continue this download.</p>
+    <div class="actions">
+      <button class="btn btn-primary" id="btn-ok" type="button">OK</button>
+      <button class="btn btn-secondary" id="btn-cancel" type="button">Cancel</button>
+    </div>
+  </div>
+  <script src="js/refresh-ask.js"></script>
+</body>
+</html>

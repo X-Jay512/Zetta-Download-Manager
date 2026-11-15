@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recent addresses</title>
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/theme.js"></script>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg-card);
+      overflow: hidden;
+    }
+    #list {
+      height: 100%;
+      overflow: auto;
+      border: 1px solid var(--border-light);
+    }
+    button {
+      display: block;
+      width: 100%;
+      height: 28px;
+      text-align: left;
+      background: transparent;
+      border: none;
+      color: var(--text-primary);
+      font-size: 12px;
+      font-family: inherit;
+      padding: 0 8px;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    button:hover, button:focus { background: var(--bg-hover); outline: none; }
+  </style>
+</head>
+<body data-frameless>
+  <div id="list"></div>
+  <script src="js/address-history.js"></script>
+</body>
+</html>

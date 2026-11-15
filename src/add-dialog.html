@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download File Info</title>
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/theme.js"></script>
+  <style>
+    body {
+      background: var(--bg-secondary);
+      height: 100vh;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+    .dialog-overlay {
+      display: none !important;
+      position: relative;
+      inset: auto;
+      background: var(--bg-secondary);
+      padding: 0;
+      align-items: stretch;
+      justify-content: flex-start;
+    }
+    .dialog-overlay.visible {
+      display: block !important;
+    }
+    .dialog {
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      width: 100%;
+      height: auto;
+      max-width: none;
+      max-height: none;
+      display: flex;
+      flex-direction: column;
+    }
+    .add-drag-bar { height: 28px; -webkit-app-region: drag; flex-shrink: 0; }
+    #add-url-dialog .dialog-header { display: none; }
+    .dialog-body { flex: none; overflow: visible; padding: 12px 16px 6px; }
+    .dialog-footer { padding: 8px 16px 12px; }
+    .file-info-footer .btn,
+    #duplicate-dialog .dialog-footer .btn {
+      width: 156px;
+      min-width: 156px;
+      height: 30px;
+      padding: 5px 8px;
+      box-sizing: border-box;
+    }
+    .file-info { display: flex; gap: 12px; align-items: stretch; }
+    .file-info-form { flex: 1; min-width: 0; }
+    .file-info-side {
+      width: 68px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .side-top { position: relative; width: 32px; height: 32px; }
+    .copy-link {
+      position: absolute; top: -7px; right: -12px;
+      width: 22px; height: 22px; padding: 0; display: inline-flex;
+      align-items: center; justify-content: center;
+      background: transparent; border: 0; border-radius: 4px;
+      color: var(--text-primary); cursor: pointer;
+    }
+    .copy-link:hover { background: var(--bg-hover); }
+    .copy-link svg { width: 15px; height: 15px; display: block; }
+    .copy-link.copied { color: var(--accent); }
+    .file-type-icon {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      display: block;
+    }
+    .file-size {
+      font-size: 13px;
+      font-weight: 650;
+      color: var(--accent);
+      text-align: center;
+      white-space: nowrap;
+    }
+    .info-row {
+      display: grid;
+      grid-template-columns: 68px 1fr;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 7px;
+    }
+    .info-row label {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .info-row input,
+    .info-row select {
+      width: 100%;
+      padding: 5px 8px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 12px;
+    }
+    .info-row input[readonly] { color: var(--text-secondary); }
+    .info-row input:focus,
+    .info-row select:focus { outline: none; border-color: var(--accent); }
+    .save-as-row { display: flex; gap: 6px; min-width: 0; }
+    .info-row .save-as-row select { width: 110px; flex: 0 0 110px; }
+    .info-row .save-as-row input { flex: 1; width: auto; min-width: 0; }
+    .btn-dots { padding: 5px 10px; flex-shrink: 0; }
+    .file-info-footer { border-top: none; }
+    .remember-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: -2px 0 7px 74px;
+      font-size: 12px;
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+    .file-info-footer { justify-content: center; gap: 8px; }
+    #duplicate-dialog .dialog-header {
+      display: flex;
+      align-items: center;
+      height: 34px;
+      padding: 0 46px 0 16px;
+      border-bottom: none;
+      box-sizing: border-box;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-primary);
+      -webkit-app-region: drag;
+      user-select: none;
+    }
+    #duplicate-dialog .dialog-body { padding: 4px 16px 6px; }
+    .dup-name {
+      margin: 2px 0 10px;
+      padding: 0;
+      background: transparent;
+      border: none;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 650;
+      word-break: break-all;
+    }
+    .dup-choices { display: flex; flex-direction: column; gap: 6px; }
+    .dup-choice {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      margin: 0;
+      padding: 6px 10px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+    .dup-choice:has(input:checked) { border-color: var(--accent); }
+    .dup-choice input { margin-top: 2px; accent-color: var(--accent); }
+    .dup-choice strong { display: block; font-size: 12px; font-weight: 650; }
+    .dup-choice small {
+      display: block;
+      margin-top: 1px;
+      color: var(--text-muted);
+      font-size: 11px;
+      line-height: 1.3;
+    }
+    .dup-remember { margin: 8px 0 2px; }
+
+    html[data-theme="theme3"] .dup-choice {
+      border: 1.5px solid var(--border);
+    }
+    html[data-theme="theme3"] .dup-choice:has(input:checked) {
+      border: 1.5px solid transparent;
+      background:
+        linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
+        var(--accent-gradient) border-box;
+    }
+  </style>
+</head>
+<body data-frameless>
+  <div class="dialog-overlay visible" id="add-url-dialog">
+    <div class="dialog dialog-download">
+      <div class="add-drag-bar"></div>
+      <div class="dialog-body">
+        <div class="file-info" id="file-info">
+          <div class="file-info-form">
+            <input type="hidden" id="input-url">
+            <div class="info-row">
+              <label>Save as</label>
+              <div class="save-as-row">
+                <select id="input-kind">
+                  <option value="general">General</option>
+                  <option value="compressed">Compressed</option>
+                  <option value="documents">Documents</option>
+                  <option value="music">Sounds</option>
+                  <option value="programs">Programs</option>
+                  <option value="video">Video</option>
+                  <option value="images">Images</option>
+                </select>
+                <input type="text" id="input-filename" placeholder="File name">
+              </div>
+            </div>
+            <label class="remember-row">
+              <input type="checkbox" id="remember-path" checked>
+              <span id="remember-label">Remember this folder for General</span>
+            </label>
+            <div class="info-row">
+              <label>Folder</label>
+              <div class="save-as-row">
+                <input type="text" id="input-save-path" readonly>
+                <button class="btn btn-secondary btn-dots" type="button" id="btn-browse-save" title="Choose folder">...</button>
+              </div>
+            </div>
+            <div class="info-row">
+              <label>Description</label>
+              <input type="text" id="input-description" placeholder="">
+            </div>
+            <span id="grab-spinner" style="display:none; color: var(--accent); font-size: 11px;">Extracting…</span>
+          </div>
+          <div class="file-info-side">
+            <div class="side-top">
+              <img id="file-type-icon" class="file-type-icon" alt="">
+              <button type="button" class="copy-link" id="btn-copy-link" title="Copy link" aria-label="Copy link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+                  <path d="M6 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="file-size" id="dl-size"></div>
+            <div class="file-size" id="dl-duration" style="color: var(--text-secondary); font-size: 11px; white-space: nowrap;"></div>
+          </div>
+        </div>
+        <div class="input-group" id="queue-panel" hidden>
+          <label>Main queue</label>
+          <p style="margin: 0 0 8px; font-size: 12px; color: var(--text-muted);">Add this file to the main queue and start it later.</p>
+          <div style="display: flex; justify-content: flex-end; gap: 8px;">
+            <button class="btn btn-secondary" type="button" id="btn-queue-back">Back</button>
+            <button class="btn btn-primary" type="button" id="btn-queue-yes">Add to queue</button>
+          </div>
+        </div>
+      </div>
+      <div class="dialog-footer file-info-footer" id="add-footer">
+        <button class="btn btn-secondary" id="btn-download-later">Download later</button>
+        <button class="btn btn-primary" id="btn-start-download">Start Download</button>
+        <button class="btn btn-secondary" id="btn-cancel-add">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="dialog-overlay" id="duplicate-dialog">
+    <div class="dialog">
+      <div class="dialog-header">This file is already in your list.</div>
+      <div class="dialog-body">
+        <p id="duplicate-filename" class="dup-name"></p>
+        <div class="dup-choices">
+          <label class="dup-choice">
+            <input type="radio" name="dup-action" value="number">
+            <span>
+              <strong>Save another copy</strong>
+              <small>Keep the current download and add a number to the new file name.</small>
+            </span>
+          </label>
+          <label class="dup-choice">
+            <input type="radio" name="dup-action" value="replace">
+            <span>
+              <strong>Replace the existing file</strong>
+              <small>Remove the one in the list and start this download in its place.</small>
+            </span>
+          </label>
+          <label class="dup-choice">
+            <input type="radio" name="dup-action" value="resume" checked>
+            <span>
+              <strong>Use the download already here</strong>
+              <small>If it finished, open the finished-file sheet. If it did not, continue it.</small>
+            </span>
+          </label>
+        </div>
+        <label class="remember-row dup-remember">
+          <input type="checkbox" id="dup-remember">
+          <span>Remember this choice. Change it later in Preferences, under Behavior.</span>
+        </label>
+      </div>
+      <div class="dialog-footer">
+        <button class="btn btn-secondary" id="btn-dup-skip" type="button">Cancel</button>
+        <button class="btn btn-primary" id="btn-dup-ok" type="button">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/add-dialog.js"></script>
+</body>
+</html>

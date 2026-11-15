@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Download complete</title>
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/theme.js"></script>
+  <style>
+    html, body { margin: 0; height: auto; overflow: hidden; background: var(--bg-card); }
+    .dialog.dialog-complete {
+      width: 100%;
+      height: auto;
+      margin: 0;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      max-width: none;
+      max-height: none;
+      background: var(--bg-card);
+      transform: none;
+      transition: none;
+      overflow: visible;
+      display: flex;
+      flex-direction: column;
+    }
+    .add-drag-bar { height: 28px; -webkit-app-region: drag; flex-shrink: 0; }
+    .dialog-body {
+      flex: none;
+      overflow: visible;
+      padding: 12px 16px 6px;
+    }
+    .dialog-footer {
+      flex-shrink: 0;
+      margin-top: 0;
+      padding: 8px 16px 12px;
+    }
+    .complete-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .complete-icon {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .complete-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .complete-title-row .complete-title {
+      margin-bottom: 0;
+      font-size: 13px;
+      font-weight: 650;
+      line-height: 1.35;
+      word-break: break-all;
+    }
+    .complete-lead {
+      color: var(--text-secondary);
+      margin: 2px 0 0;
+      font-size: 11px;
+    }
+    .input-group {
+      margin-bottom: 8px;
+    }
+    .input-group label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+    .input-group input {
+      width: 100%;
+      height: 28px;
+      padding: 5px 8px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 12px;
+      box-sizing: border-box;
+      outline: none;
+    }
+    .settings-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 3px 0;
+      font-size: 12px;
+      color: var(--text-primary);
+      cursor: pointer;
+      margin: 0;
+    }
+    .complete-actions {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .complete-actions .btn {
+      flex: 1 1 0;
+      min-width: 0;
+      height: 30px;
+      padding: 5px 8px;
+      box-sizing: border-box;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .copy-link {
+      width: 22px;
+      height: 22px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: transparent;
+      border: 0;
+      border-radius: 4px;
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+    .copy-link:hover { background: var(--bg-hover); }
+    .copy-link svg { width: 14px; height: 14px; display: block; }
+    .copy-link.copied { color: var(--accent); }
+  </style>
+</head>
+<body data-frameless>
+  <div class="dialog dialog-complete">
+    <div class="add-drag-bar"></div>
+    <div class="dialog-body">
+      <div class="complete-head">
+        <img id="complete-icon" class="complete-icon" alt="">
+        <div>
+          <div class="complete-title-row">
+            <div class="complete-title" id="complete-name"></div>
+            <button type="button" class="copy-link" id="btn-copy-link" title="Copy link" aria-label="Copy link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+                <path d="M6 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
+          </div>
+          <p class="complete-lead" id="complete-summary">The file is ready.</p>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Save as</label>
+        <input type="text" id="complete-path" readonly>
+      </div>
+      <label class="settings-toggle">
+        <span>Don’t show this again</span>
+        <input type="checkbox" id="complete-dont-show">
+        <span class="toggle-ui"></span>
+      </label>
+    </div>
+    <div class="dialog-footer complete-actions">
+      <button class="btn btn-secondary" id="btn-complete-close">Close</button>
+      <button class="btn btn-secondary" id="btn-complete-folder">Open folder</button>
+      <button class="btn btn-primary" id="btn-complete-open">Open</button>
+    </div>
+  </div>
+  <script src="js/complete-dialog.js"></script>
+</body>
+</html>

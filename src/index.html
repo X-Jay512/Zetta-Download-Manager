@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zetta Download Manager</title>
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/studio.css">
+  <script src="js/theme.js"></script>
+</head>
+<body>
+
+  <header class="app-titlebar">
+    <img src="assets/icons/app.png" alt="">
+    <span>Zetta Download Manager</span>
+  </header>
+
+  <div class="toolbar">
+    <button class="toolbar-btn" id="btn-add-url">
+      <img class="icon" src="assets/ui/add-url.png" alt="">
+      <span>Add URL</span>
+    </button>
+    <button class="toolbar-btn" id="btn-playlist">
+      <img class="icon" src="assets/ui/add-playlist.png" alt="">
+      <span>Playlist</span>
+    </button>
+    <button class="toolbar-btn" id="btn-resume" disabled>
+      <img class="icon" src="assets/ui/resume.png" alt="">
+      <span>Resume</span>
+    </button>
+    <button class="toolbar-btn" id="btn-stop" disabled>
+      <img class="icon" src="assets/ui/stop.png" alt="">
+      <span>Stop</span>
+    </button>
+    <button class="toolbar-btn" id="btn-stop-all" disabled>
+      <img class="icon" src="assets/ui/stop-all.png" alt="">
+      <span>Stop All</span>
+    </button>
+    <div class="toolbar-sep"></div>
+    <button class="toolbar-btn" id="btn-delete" disabled>
+      <img class="icon" src="assets/ui/delete.png" alt="">
+      <span>Delete</span>
+    </button>
+    <button class="toolbar-btn" id="btn-open-folder" disabled>
+      <img class="icon" src="assets/ui/open-folder.png" alt="">
+      <span>Open Folder</span>
+    </button>
+    <div class="toolbar-sep"></div>
+    <button class="toolbar-btn" id="btn-options">
+      <img class="icon" src="assets/ui/options.png" alt="">
+      <span>Options</span>
+    </button>
+    <button class="toolbar-btn" id="btn-scheduler">
+      <img class="icon" src="assets/ui/scheduler.png" alt="">
+      <span>Scheduler</span>
+    </button>
+    <div class="queue-split">
+      <button class="toolbar-btn" id="btn-start-queue" disabled>
+        <img class="icon" src="assets/ui/start-queue.png" alt="">
+        <span>Start Queue</span>
+      </button>
+      <button class="queue-caret" id="btn-start-queue-menu" type="button" aria-label="Choose queue">&#9662;</button>
+      <div class="queue-menu" id="start-queue-menu" hidden></div>
+    </div>
+    <div class="queue-split">
+      <button class="toolbar-btn" id="btn-stop-queue" disabled>
+        <img class="icon" src="assets/ui/stop-queue.png" alt="">
+        <span>Stop Queue</span>
+      </button>
+      <button class="queue-caret" id="btn-stop-queue-menu" type="button" aria-label="Choose queue">&#9662;</button>
+      <div class="queue-menu" id="stop-queue-menu" hidden></div>
+    </div>
+    <button class="toolbar-btn" id="btn-extension-setup" type="button">
+      <img class="icon" src="assets/icons/app.png" alt="">
+      <span>Install Extension</span>
+    </button>
+  </div>
+
+  <div class="app-body">
+
+    <div class="sidebar">
+      <div class="sidebar-resizer" id="sidebar-resizer"></div>
+      <div class="sidebar-header">Categories</div>
+      <div class="sidebar-tree">
+        
+        <!-- All Downloads Group -->
+        <div class="tree-group">
+          <div class="tree-item active" data-category="all">
+            <span class="icon caret">&#9660;</span>
+            <img class="cat-icon" src="assets/ui/all-downloads.png" alt="">
+            <span class="label">All Downloads</span>
+            <span class="badge" id="badge-all">0</span>
+          </div>
+          <div class="tree-children">
+            <div class="tree-item" data-category="all_compressed">
+              <img class="cat-icon" src="assets/ui/compress.png" alt=""> <span class="label">Compressed</span>
+            </div>
+            <div class="tree-item" data-category="all_documents">
+              <img class="cat-icon" src="assets/ui/documents.png" alt=""> <span class="label">Documents</span>
+            </div>
+            <div class="tree-item" data-category="all_music">
+              <img class="cat-icon" src="assets/ui/music.png" alt=""> <span class="label">Sounds</span>
+            </div>
+            <div class="tree-item" data-category="all_programs">
+              <img class="cat-icon" src="assets/ui/programs.png" alt=""> <span class="label">Programs</span>
+            </div>
+            <div class="tree-item" data-category="all_video">
+              <img class="cat-icon" src="assets/ui/video.png" alt=""> <span class="label">Video</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Unfinished Group -->
+        <div class="tree-group">
+          <div class="tree-item collapsed" data-category="unfinished">
+            <span class="icon caret">&#9660;</span>
+            <img class="cat-icon" src="assets/ui/unfinished.png" alt="">
+            <span class="label">Unfinished</span>
+          </div>
+          <div class="tree-children" style="display: none;">
+            <div class="tree-item" data-category="unfinished_compressed">
+              <img class="cat-icon" src="assets/ui/compress.png" alt=""> <span class="label">Compressed</span>
+            </div>
+            <div class="tree-item" data-category="unfinished_documents">
+              <img class="cat-icon" src="assets/ui/documents.png" alt=""> <span class="label">Documents</span>
+            </div>
+            <div class="tree-item" data-category="unfinished_music">
+              <img class="cat-icon" src="assets/ui/music.png" alt=""> <span class="label">Sounds</span>
+            </div>
+            <div class="tree-item" data-category="unfinished_programs">
+              <img class="cat-icon" src="assets/ui/programs.png" alt=""> <span class="label">Programs</span>
+            </div>
+            <div class="tree-item" data-category="unfinished_video">
+              <img class="cat-icon" src="assets/ui/video.png" alt=""> <span class="label">Video</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Finished Group -->
+        <div class="tree-group">
+          <div class="tree-item collapsed" data-category="finished">
+            <span class="icon caret">&#9660;</span>
+            <img class="cat-icon" src="assets/ui/finished.png" alt="">
+            <span class="label">Finished</span>
+          </div>
+          <div class="tree-children" style="display: none;">
+            <div class="tree-item" data-category="finished_compressed">
+              <img class="cat-icon" src="assets/ui/compress.png" alt=""> <span class="label">Compressed</span>
+            </div>
+            <div class="tree-item" data-category="finished_documents">
+              <img class="cat-icon" src="assets/ui/documents.png" alt=""> <span class="label">Documents</span>
+            </div>
+            <div class="tree-item" data-category="finished_music">
+              <img class="cat-icon" src="assets/ui/music.png" alt=""> <span class="label">Sounds</span>
+            </div>
+            <div class="tree-item" data-category="finished_programs">
+              <img class="cat-icon" src="assets/ui/programs.png" alt=""> <span class="label">Programs</span>
+            </div>
+            <div class="tree-item" data-category="finished_video">
+              <img class="cat-icon" src="assets/ui/video.png" alt=""> <span class="label">Video</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Queues Group -->
+        <div class="tree-group">
+          <div class="tree-item collapsed" data-category="queues">
+            <span class="icon caret">&#9660;</span>
+            <img class="cat-icon" src="assets/ui/queues.png" alt="">
+            <span class="label">Queues</span>
+          </div>
+          <div class="tree-children" style="display: none;">
+            <div class="tree-item" data-category="queue_main">
+              <img class="cat-icon" src="assets/ui/main-queues.png" alt=""> <span class="label">General queue</span>
+            </div>
+            <div class="tree-item" data-category="queue_sync">
+              <img class="cat-icon" src="assets/ui/sync.png" alt=""> <span class="label">Repeat queue</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tree-group">
+          <div class="tree-item collapsed" id="playlists-toggle" data-category="playlists">
+            <span class="icon caret">&#9660;</span>
+            <img class="cat-icon" src="assets/ui/add-playlist.png" alt="">
+            <span class="label">Playlists</span>
+          </div>
+          <div class="tree-children" id="playlist-tree" style="display: none;"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="list-scroll" id="list-scroll">
+      <div class="download-list-header" id="list-header">
+        <div data-sort="none"></div>
+        <div data-sort="fileName" class="sortable">File Name<span class="sort-icon"></span><div class="resizer" data-col="name"></div></div>
+        <div class="q-head" title="Queue"><img src="assets/ui/queues.png" alt=""><div class="resizer" data-col="queue"></div></div>
+        <div data-sort="size" class="sortable">Size<span class="sort-icon"></span><div class="resizer" data-col="size"></div></div>
+        <div data-sort="status" class="sortable">Status<span class="sort-icon"></span><div class="resizer" data-col="status"></div></div>
+        <div data-sort="speed" class="sortable">Speed<span class="sort-icon"></span><div class="resizer" data-col="speed"></div></div>
+        <div data-sort="time" class="sortable">Time Left<span class="sort-icon"></span><div class="resizer" data-col="time"></div></div>
+        <div data-sort="tried" class="sortable">Date Added<span class="sort-icon"></span></div>
+      </div>
+      <div class="download-list" id="download-list">
+        <div class="empty-state" id="empty-state">
+          <img class="empty-icon" src="assets/ui/download.png" alt="">
+          <p>No downloads yet — press Add URL or install the browser extension</p>
+        </div>
+      </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="dialog-overlay" id="complete-dialog">
+    <div class="dialog dialog-complete">
+      <div class="dialog-header">Download complete</div>
+      <div class="dialog-body">
+        <div class="complete-head">
+          <img id="complete-icon" class="complete-icon" alt="">
+          <div>
+            <div class="complete-title-row">
+              <div class="complete-title" id="complete-name"></div>
+              <button type="button" class="copy-link" id="btn-copy-link" title="Copy link" aria-label="Copy link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+                  <path d="M6 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+            </div>
+            <p class="complete-lead" id="complete-summary">The file is ready.</p>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Save as</label>
+          <input type="text" id="complete-path" readonly>
+        </div>
+        <label class="settings-toggle">
+          <span>Don’t show this sheet again</span>
+          <input type="checkbox" id="complete-dont-show">
+          <span class="toggle-ui"></span>
+        </label>
+      </div>
+      <div class="dialog-footer complete-actions">
+        <button class="btn btn-secondary" id="btn-complete-close">Close</button>
+        <button class="btn btn-secondary" id="btn-complete-folder">Open folder</button>
+        <button class="btn btn-primary" id="btn-complete-open">Open</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="context-menu" id="queue-context-menu">
+    <div class="menu-item" data-act="start">Start now</div>
+    <div class="menu-item" data-act="stop">Stop</div>
+    <div class="menu-separator"></div>
+    <div class="menu-item" data-act="files">Edit queue</div>
+    <div class="menu-item" data-act="schedule">Schedule</div>
+    <div class="menu-separator"></div>
+    <div class="menu-item" data-act="delete">Delete</div>
+    <div class="menu-item" data-act="create">Create new queue</div>
+  </div>
+
+  <div class="context-menu" id="playlist-context-menu">
+    <div class="menu-item" data-act="open">Open in playlist dialog</div>
+    <div class="menu-item" data-act="copy">Copy playlist address</div>
+    <div class="menu-separator"></div>
+    <div class="menu-item" data-act="delete">Remove playlist</div>
+  </div>
+
+  <div class="context-menu" id="delete-menu">
+    <div class="menu-item" id="delete-menu-delete">
+      <span class="menu-label">Delete</span>
+      <span class="menu-hint">From the list and from disk</span>
+    </div>
+    <div class="menu-item" id="delete-menu-remove">
+      <span class="menu-label">Remove</span>
+      <span class="menu-hint">From the list only</span>
+    </div>
+  </div>
+
+  <div class="context-menu" id="row-context-menu">
+     <div class="menu-item" id="ctx-open">Open</div>
+     <div class="menu-item" id="ctx-open-with">Open with...</div>
+     <div class="menu-item" id="ctx-open-folder">Open folder</div>
+     <div class="menu-separator"></div>
+     <div class="menu-item" id="ctx-move">Move/Rename (Ctrl-M)</div>
+     <div class="menu-item" id="ctx-redownload">Redownload</div>
+     <div class="menu-separator"></div>
+     <div class="menu-item" id="ctx-resume">Resume Download</div>
+     <div class="menu-item" id="ctx-stop">Stop Download</div>
+     <div class="menu-item" id="ctx-refresh">Refresh download address</div>
+     <div class="menu-separator"></div>
+     <div class="menu-item menu-sub" id="ctx-add-queue">
+       <span>Add to queue</span>
+       <span class="sub-caret">&#9656;</span>
+       <div class="submenu" id="ctx-queue-sub"></div>
+     </div>
+     <div class="menu-item" id="ctx-leave-queue">Delete from queue</div>
+     <div class="menu-separator"></div>
+     <div class="menu-item" id="ctx-select-all">Select all (Ctrl+A)</div>
+     <div class="menu-item" id="ctx-remove">Remove</div>
+     <div class="menu-separator"></div>
+     <div class="menu-item" id="ctx-properties">Properties</div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/scheduler.js"></script>
+  <script src="js/settings.js"></script>
+</body>
+</html>

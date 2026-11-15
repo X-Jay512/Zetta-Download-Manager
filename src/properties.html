@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>File Properties</title>
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/theme.js"></script>
+  <style>
+    body { padding: 16px 16px 64px; background: var(--bg-secondary); overflow: hidden; }
+    .properties-header { display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 12px; }
+    .properties-icon { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: transparent; }
+    .properties-icon img { width: 40px; height: 40px; object-fit: contain; }
+    .properties-name { font-size: 14px; font-weight: 600; color: var(--text-primary); word-break: break-all; }
+    
+    .prop-row { display: grid; grid-template-columns: 80px 1fr; align-items: center; margin-bottom: 8px; font-size: 12px; }
+    .prop-row label { color: var(--text-secondary); }
+    .prop-row span.val { color: var(--text-primary); font-weight: 500; }
+    .prop-row input.val { background: var(--bg-primary); border: 1px solid var(--border); padding: 4px 8px; border-radius: var(--radius-sm); color: var(--text-primary); font-family: inherit; font-size: 12px; width: 100%; box-sizing: border-box; }
+    
+    .prop-section { margin-top: 16px; border-top: 1px solid var(--border); padding-top: 12px; }
+    .prop-section-title { font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 8px; }
+    
+    .prop-row.has-btn { grid-template-columns: 80px 1fr auto; gap: 8px; }
+    
+    .footer-actions { position: absolute; bottom: 16px; right: 16px; display: flex; gap: 8px; }
+  </style>
+</head>
+<body>
+
+  <div class="properties-header">
+    <div class="properties-icon" id="prop-icon">&#128196;</div>
+    <div class="properties-name" id="prop-fileName">Filename</div>
+  </div>
+  
+  <div class="prop-row">
+    <label>Type:</label>
+    <span class="val" id="prop-type">Unknown File</span>
+  </div>
+  <div class="prop-row">
+    <label>Status:</label>
+    <span class="val" id="prop-status">Complete</span>
+  </div>
+  <div class="prop-row">
+    <label id="prop-size-label">Size:</label>
+    <span class="val" id="prop-size">0 Bytes</span>
+  </div>
+  
+  <div class="prop-row has-btn">
+    <label>Save To:</label>
+    <input type="text" class="val" id="prop-path" readonly>
+    <button class="btn btn-secondary" style="padding: 4px 12px;" id="btn-open-folder">Open Dir</button>
+  </div>
+  <div class="prop-row">
+    <label>Address:</label>
+    <input type="text" class="val" id="prop-url" readonly>
+  </div>
+  <div class="prop-row">
+    <label>Description:</label>
+    <input type="text" class="val" id="prop-description" readonly>
+  </div>
+  <div class="prop-row" id="prop-problem-row" hidden>
+    <label>Problem:</label>
+    <span class="val" id="prop-problem"></span>
+  </div>
+  
+  <div class="prop-section">
+    <div class="prop-section-title">Network Details</div>
+    <div class="prop-row">
+      <label>Referer:</label>
+      <input type="text" class="val" id="prop-referer" readonly>
+    </div>
+    <div class="prop-row">
+      <label>Login:</label>
+      <input type="text" class="val" id="prop-login" readonly>
+    </div>
+    <div class="prop-row">
+      <label>Password:</label>
+      <input type="text" class="val" id="prop-password" readonly>
+    </div>
+  </div>
+
+  <div class="footer-actions">
+    <button class="btn btn-primary" id="btn-open-file">Open</button>
+    <button class="btn btn-secondary" id="btn-close">OK</button>
+  </div>
+  
+  <script src="js/properties.js"></script>
+</body>
+</html>

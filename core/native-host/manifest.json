@@ -1,0 +1,10 @@
+{
+  "name": "com.xjay5.zdm",
+  "description": "Zetta Download Manager Native Messaging Host",
+  "path": "host.bat",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://hjgcjmndnlgmobihkhmmpjmiemdlfkhc/",
+    "chrome-extension://igcfcgmbljjmbnfpnjdfebilopgbofna/"
+  ]
+}

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preferences - Zetta Download Manager</title>
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/theme.js"></script>
+  <style>
+    /* Reset body for modal window */
+    body {
+      background: var(--bg-secondary);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      padding-top: 34px !important;
+      box-sizing: border-box;
+    }
+    body[data-window="settings"]::before,
+    body::before {
+      height: 34px !important;
+      background: var(--bg-secondary) !important;
+      border-bottom: 1px solid var(--border);
+      box-sizing: border-box;
+    }
+    .settings-overlay {
+      display: flex !important;
+      position: static;
+      background: transparent;
+      backdrop-filter: none;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .settings-shell {
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      width: 100%;
+      height: 100%;
+    }
+    #btn-settings-close { display: none; } /* handled by OS frame now! */
+    .setup-brand { display: none; justify-content: center; padding: 6px 0 2px; }
+    .setup-brand img { width: 72px; height: 72px; object-fit: contain; }
+    body.is-extension-setup .setup-brand { display: flex; }
+    body.is-extension-setup .settings-nav { display: none; }
+    body.is-extension-setup #btn-settings-reset { display: none; }
+    body.is-extension-setup .settings-footer { justify-content: center; }
+    body.is-extension-setup .setup-choices label { display: flex; gap: 8px; align-items: flex-start; margin: 6px 0; }
+    body.is-extension-setup .setup-choices b { display: block; }
+    body.is-extension-setup .setup-choices small { display: block; color: var(--text-muted, #9aa3b2); font-size: 12px; }
+  </style>
+</head>
+<body data-window="settings">
+  <div class="settings-overlay visible" id="settings-overlay">
+    <div class="settings-shell">
+      <aside class="settings-nav">
+        <div class="settings-nav-title">Preferences</div>
+        <button class="settings-nav-item active" data-pane="launch">Launch</button>
+        <button class="settings-nav-item" data-pane="catch">Extension</button>
+        <button class="settings-nav-item" data-pane="library">Library</button>
+        <button class="settings-nav-item" data-pane="behavior">Behavior</button>
+        <button class="settings-nav-item" data-pane="speed">Speed</button>
+        <button class="settings-nav-item" data-pane="proxy">Proxy</button>
+        <button class="settings-nav-item" data-pane="look">Look</button>
+      </aside>
+      <div class="settings-main">
+        <div class="setup-brand" hidden>
+          <img src="assets/icons/app.png" alt="Zetta Download Manager">
+        </div>
+        <div class="settings-top">
+          <div>
+            <div class="settings-heading" id="settings-heading">Launch</div>
+            <div class="settings-sub" id="settings-sub">How ZDM starts and stays out of the way</div>
+          </div>
+          <button class="titlebar-btn" id="btn-settings-close" title="Close">&#x2715;</button>
+        </div>
+        <div class="settings-scroll">
+
+          <section class="settings-pane active" data-pane="launch">
+            <div class="settings-card">
+              <div class="settings-card-title">Startup</div>
+              <label class="settings-toggle">
+                <span>Start ZDM with Windows</span>
+                <input type="checkbox" data-setting="launch.startWithWindows">
+                <span class="toggle-ui"></span>
+              </label>
+              <label class="settings-toggle">
+                <span>Open in the tray, not the window</span>
+                <input type="checkbox" data-setting="launch.startMinimized">
+                <span class="toggle-ui"></span>
+              </label>
+              <label class="settings-toggle">
+                <span>Desktop toast when a file finishes</span>
+                <input type="checkbox" data-setting="launch.showNotifications">
+                <span class="toggle-ui"></span>
+              </label>
+              <label class="settings-toggle">
+                <span>Keep the computer awake while a file is downloading</span>
+                <input type="checkbox" data-setting="launch.keepAwake">
+                <span class="toggle-ui"></span>
+              </label>
+            </div>
+          </section>
+
+          <section class="settings-pane" data-pane="catch">
+            <div class="settings-card">
+              <div class="settings-card-title">Browsers</div>
+              <p class="settings-hint">Only browsers installed on this computer are listed. Connected means the extension is in the browser.</p>
+              <div id="browser-list"></div>
+              <div class="inline-actions">
+                <button class="btn btn-secondary" type="button" id="btn-scan-browsers">Check again</button>
+                <span class="ext-scroll-note">Scroll to see a guide on how to install the extension.</span>
+              </div>
+              <ol class="ext-steps">
+                <li>
+                  <span class="ext-step-title">Brave, Edge, and other Chromium browsers</span>
+                  <ol>
+                    <li>Press <strong class="ext-action">Install</strong>.</li>
+                    <li>Turn on <strong class="ext-action">Developer mode</strong> in Extensions. <button type="button" class="guide-link" data-guide="developer-mode.html">How to turn on Developer mode</button></li>
+                  </ol>
+                </li>
+                <li>
+                  <span class="ext-step-title">Google Chrome <button type="button" class="guide-link" data-guide="chrome.html">Chrome guide</button></span>
+                  <ol>
+                    <li>Press <strong class="ext-action">Copy path</strong>.</li>
+                    <li>Press <strong class="ext-action">Install</strong>. Chrome will open, then go to the extension manager. <button type="button" class="copy-chip" data-copy="chrome://extensions">chrome://extensions</button></li>
+                    <li>Turn on <strong class="ext-action">Developer mode</strong>. <button type="button" class="guide-link" data-guide="developer-mode.html">How to turn on Developer mode</button></li>
+                    <li>Press <strong class="ext-action">Load unpacked</strong>.</li>
+                    <li>Paste the path in the Folder box at the bottom, then press <strong class="ext-action">Select Folder</strong>.</li>
+                  </ol>
+                </li>
+                <li>
+                  <span class="ext-step-title">Firefox and Firefox-based browsers <button type="button" class="guide-link" data-guide="firefox.html">Firefox guide</button></span>
+                  <ol>
+                    <li>Press <strong class="ext-action">Copy</strong>.</li>
+                    <li>Press <strong class="ext-action">Install</strong>. The browser opens about:debugging.</li>
+                    <li>Press <strong class="ext-action">Load Temporary Add-on</strong>.</li>
+                    <li>Paste the path in the box at the bottom, then press <strong class="ext-action">Open</strong>.</li>
+                  </ol>
+                </li>
+              </ol>
+              <p class="guide-open-note" id="guide-open-note" hidden></p>
+            </div>
+          </section>
+
+          <section class="settings-pane" data-pane="extension-custom">
+            <div class="settings-card setup-choices">
+              <div class="settings-card-title">Quality list</div>
+              <label><input type="radio" name="setupQuality" value="full"> <span><b>Full</b><small>Every bitrate stays in the list, with its kbps, with audio selection.</small></span></label>
+              <label><input type="radio" name="setupQuality" value="average"> <span><b>Average</b><small>Best bitrate for each resolution and format (e.g. 720p MP4 &amp; 720p WebM), with audio selection.</small></span></label>
+              <label><input type="radio" name="setupQuality" value="simple"> <span><b>Simple</b><small>Show video quality only.</small></span></label>
+            </div>
+            <div class="settings-card setup-choices">
+              <div class="settings-card-title">Frame rate</div>
+              <label><input type="radio" name="setupFps" value="30"> <span>30 fps and above</span></label>
+              <label><input type="radio" name="setupFps" value="60"> <span>60 fps and above</span></label>
+              <label><input type="radio" name="setupFps" value="off"> <span>Off</span></label>
+            </div>
+          </section>
+
+          <section class="settings-pane" data-pane="library">
+            <div class="settings-card">
+              <div class="settings-card-title">Default drop zone</div>
+              <div class="path-row">
+                <input type="text" data-setting="library.defaultPath">
+                <button class="btn btn-secondary path-browse" data-target="library.defaultPath">Browse</button>
+              </div>
+              <label class="settings-toggle">
+                <span>Remember the last folder I pick in the start sheet</span>
+                <input type="checkbox" data-setting="library.rememberLastFolder">
+                <span class="toggle-ui"></span>
+              </label>
+              <label class="settings-toggle">
+                <span>Stamp finished files with the server’s time</span>
+                <input type="checkbox" data-setting="library.useServerFileTime">
+                <span class="toggle-ui"></span>
+              </label>
+            </div>
+            <div class="settings-card">
+              <div class="settings-card-title">Per-kind folders</div>
+              <p class="settings-hint">ZDM sorts by file kind, then drops the file in that folder.</p>
+              <div class="folder-grid" id="folder-grid"></div>
+            </div>
+            <div class="settings-card">
+              <div class="settings-card-title">Staging (parts)</div>
+              <p class="settings-hint">Chunk files live here until the merge finishes. Prefer a fast local drive.</p>
+              <div class="path-row">
+                <input type="text" data-setting="library.tempPath">
+                <button class="btn btn-secondary path-browse" data-target="library.tempPath">Browse</button>
+              </div>
+            </div>
+            <div class="settings-card">
+              <div class="settings-card-title">Missing files</div>
+              <p class="settings-hint">Finished items whose file is no longer in the folder can leave the list.</p>
+              <label class="settings-toggle">
+                <span>Drop finished items when the file is gone</span>
+                <input type="checkbox" data-setting="library.removeMissing">
+                <span class="toggle-ui"></span>
+              </label>
+              <div class="inline-actions">
+                <button class="btn btn-secondary" type="button" id="btn-sweep-missing">Check the library now</button>
+              </div>
+            </div>
+            <div class="settings-card">
+              <div class="settings-card-title">Download list</div>
+              <p class="settings-hint">A JSON file of every item in the list. Import adds items that are not already there.</p>
+              <div class="inline-actions">
+                <button class="btn btn-secondary" type="button" id="btn-library-export">Export list</button>
+                <button class="btn btn-secondary" type="button" id="btn-library-import">Import list</button>
+              </div>
+              <p class="settings-hint" id="library-action-note" hidden></p>
+            </div>
+            <div class="settings-card">
+              <div class="settings-card-title">Settings backup</div>
+              <p class="settings-hint">A JSON file of your app preferences and configurations. Import restores your settings.</p>
+              <div class="inline-actions">
+                <button class="btn btn-secondary" type="button" id="btn-settings-export">Export settings</button>
+                <button class="btn btn-secondary" type="button" id="btn-settings-import">Import settings</button>
+              </div>
+              <p class="settings-hint" id="settings-action-note" hidden></p>
+            </div>
+          </section>
+
+          <section class="settings-pane" data-pane="behavior">
+            <div class="settings-card">
+              <div class="settings-card-title">Start sheet</div>
+              <label class="settings-toggle">
+                <span>Ask me before a download starts</span>
+                <input type="checkbox" data-setting="behavior.confirmBeforeStart">
+                <span class="toggle-ui"></span>
+              </label>
+              <label class="settings-toggle">
+                <span>Start the file while the info sheet is still open</span>
+                <input type="checkbox" data-setting="behavior.startWhileDialog">
+                <span class="toggle-ui"></span>
+              </label>
+              <label class="settings-toggle">
+                <span>Ask before parking a file on Download later</span>
+                <input type="checkbox" data-setting="behavior.queueOnLater">
+                <span class="toggle-ui"></span>
+              </label>
+              <label class="settings-toggle">
+                <span>Tell me when the file is ready</span>
+                <input type="checkbox" data-setting="behavior.showCompleteDialog">
+                <span class="toggle-ui"></span>
+              </label>
+              <label class="settings-toggle">
+                <span>Ask before deleting downloads</span>
+                <input type="checkbox" data-setting="behavior.confirmDelete">
+                <span class="toggle-ui"></span>
+              </label>
+              <label class="settings-toggle">
+                <span>Ignore server time changes when a download resumes</span>
+                <input type="checkbox" data-setting="behavior.ignoreMtime">
+                <span class="toggle-ui"></span>
+              </label>
+              <label class="settings-toggle">
+                <span>Ignore site certificates this computer does not trust</span>
+                <input type="checkbox" data-setting="behavior.ignoreSsl">
+                <span class="toggle-ui"></span>
+              </label>
+
+              <label class="settings-toggle">
+                <span>Try a failed download again on its own</span>
+                <input type="checkbox" data-setting="behavior.retryFailed">
+                <span class="toggle-ui"></span>
+              </label>
+              <div class="settings-row">
+                <span>Attempts</span>
+                <input type="number" min="1" max="10" data-setting="behavior.retryCount">
+              </div>
+            </div>
+            <div class="settings-card">
+              <div class="settings-card-title">Cancel button</div>
+              <label class="settings-toggle">
+                <span>Ask me when I press Cancel</span>
+                <input type="checkbox" data-setting="behavior.cancelAsk">
+                <span class="toggle-ui"></span>
+              </label>
+              <div class="settings-row">
+                <span>If I skip the question, do this</span>
+                <select data-setting="behavior.cancelAction">
+                  <option value="keep">Keep: close the window and pause</option>
+                  <option value="abandon">Cancel the download</option>
+                </select>
+              </div>
+              <p class="settings-hint">Keep closes the progress window, so the download pauses and the saved pieces stay. Cancel deletes those pieces and leaves the file in the list as not downloaded.</p>
+            </div>
+            <div class="settings-card">
+              <div class="settings-card-title">Same link twice</div>
+              <div class="settings-row">
+                <span>If this URL is already in the list</span>
+                <select data-setting="behavior.duplicateAction">
+                  <option value="ask">Ask me</option>
+                  <option value="number">Save another copy with a number</option>
+                  <option value="replace">Replace the existing file</option>
+                  <option value="resume">Continue the one already in the list</option>
+                  <option value="skip">Leave the existing one alone</option>
+                </select>
+              </div>
+            </div>
+            <div class="settings-card">
+              <div class="settings-card-title">Prompts and dialogs</div>
+              <p class="settings-hint">Restore dialogs and confirmation questions you chose not to show again.</p>
+              <div class="inline-actions">
+                <button class="btn btn-secondary" type="button" id="btn-restore-dialogs">Restore all hidden dialogs</button>
+              </div>
+              <p class="settings-hint" id="restore-dialogs-note" hidden></p>
+            </div>
+
+          </section>
+
+          <section class="settings-pane" data-pane="speed">
+            <div class="settings-card">
+              <div class="settings-card-title">Parallelism</div>
+              <div class="settings-row">
+                <span>Connections per file</span>
+                <select data-setting="speed.connectionsPerFile">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="4">4</option>
+                  <option value="8">8</option>
+                  <option value="16">16</option>
+                  <option value="32">32</option>
+                </select>
+              </div>
+              <div class="settings-row">
+                <span>Files at once</span>
+                <input type="number" min="0" step="1" data-setting="speed.maxConcurrent" placeholder="Unlimited">
+              </div>
+            </div>
+            <div class="settings-card">
+              <div class="settings-card-title">Per-host settings</div>
+              <p class="settings-hint">Save a connection count, browser identity, and login for one site. Every other site keeps the numbers above.</p>
+              <div id="exception-list" class="exception-list"></div>
+              <div class="settings-row">
+                <span>Host</span>
+                <input type="text" id="exception-host" placeholder="cdn.example.com" spellcheck="false" autocomplete="off">
+              </div>
+              <div class="settings-row">
+                <span>User agent</span>
+                <input type="text" id="exception-ua" placeholder="Leave empty to keep the normal one" spellcheck="false" autocomplete="off">
+              </div>
+              <div class="settings-row">
+                <span>Login</span>
+                <input type="text" id="exception-user" spellcheck="false" autocomplete="off">
+              </div>
+              <div class="settings-row">
+                <span>Password</span>
+                <input type="password" id="exception-pass" autocomplete="off">
+              </div>
+              <div class="settings-row">
+                <span>Connections for this host</span>
+                <select id="exception-count">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="4">4</option>
+                  <option value="8" selected>8</option>
+                  <option value="16">16</option>
+                  <option value="32">32</option>
+                </select>
+              </div>
+              <div class="exception-actions">
+                <span class="exception-error" id="exception-error" hidden></span>
+                <button class="btn btn-secondary" type="button" id="exception-add">Add host</button>
+              </div>
+            </div>
+            <div class="settings-card">
+              <div class="settings-card-title">Pace</div>
+              <p class="settings-hint">One ceiling for every active file together — not per connection. Applies while downloads run.</p>
+              <label class="settings-toggle">
+                <span>Limit total download speed</span>
+                <input type="checkbox" data-setting="speed.throttleEnabled">
+                <span class="toggle-ui"></span>
+              </label>
+              <div class="settings-row">
+                <span>Ceiling</span>
+                <div class="inline-field">
+                  <input type="number" min="1" step="0.1" data-setting="speed.throttleValue">
+                  <select data-setting="speed.throttleUnit" style="width: 88px;">
+                    <option value="KB">KB/s</option>
+                    <option value="MB">MB/s</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="settings-card">
+              <div class="settings-card-title">Cap</div>
+              <label class="settings-toggle">
+                <span>Stop after a data budget</span>
+                <input type="checkbox" data-setting="speed.limitEnabled">
+                <span class="toggle-ui"></span>
+              </label>
+              <div class="settings-row">
+                <span>No more than</span>
+                <div class="inline-field">
+                  <input type="number" min="1" data-setting="speed.limitMB">
+                  <span class="suffix">MB every</span>
+                  <input type="number" min="1" data-setting="speed.limitHours">
+                  <span class="suffix">hours</span>
+                </div>
+              </div>
+              <label class="settings-toggle">
+                <span>Warn me before the cap pauses the queue</span>
+                <input type="checkbox" data-setting="speed.warnBeforeStop">
+                <span class="toggle-ui"></span>
+              </label>
+            </div>
+          </section>
+
+          <section class="settings-pane" data-pane="proxy">
+            <div class="settings-card">
+              <div class="settings-card-title">Optional hop</div>
+              <p class="settings-hint">System uses the Windows proxy, including a PAC file. Manual uses the address below.</p>
+              <div class="settings-row">
+                <span>Proxy</span>
+                <select data-setting="proxy.mode">
+                  <option value="off">Off</option>
+                  <option value="system">Windows proxy and PAC</option>
+                  <option value="manual">Manual</option>
+                </select>
+              </div>
+              <div class="settings-row" data-proxy-manual>
+                <span>Kind</span>
+                <select data-setting="proxy.type">
+                  <option value="http">HTTP</option>
+                  <option value="https">HTTPS</option>
+                  <option value="socks5">SOCKS5</option>
+                </select>
+              </div>
+              <div class="settings-row" data-proxy-manual>
+                <span>Host</span>
+                <input type="text" data-setting="proxy.host" placeholder="127.0.0.1">
+              </div>
+              <div class="settings-row" data-proxy-manual>
+                <span>Port</span>
+                <input type="number" min="0" data-setting="proxy.port">
+              </div>
+              <div class="settings-row" data-proxy-manual>
+                <span>User</span>
+                <input type="text" data-setting="proxy.username" placeholder="optional">
+              </div>
+              <div class="settings-row" data-proxy-manual>
+                <span>Password</span>
+                <input type="password" data-setting="proxy.password" placeholder="optional">
+              </div>
+            </div>
+          </section>
+          <section class="settings-pane" data-pane="look">
+            <div class="settings-card">
+              <div class="settings-card-title">Theme</div>
+              <div class="settings-row">
+                <span>Theme</span>
+                <select data-setting="appearance.theme">
+                  <option value="theme1">Theme 1</option>
+                  <option value="theme2">Theme 2</option>
+                  <option value="theme3">Theme 3</option>
+                  <option value="theme4">Theme 4</option>
+                </select>
+              </div>
+              <label class="settings-toggle">
+                <span>Show lines between columns</span>
+                <input type="checkbox" data-setting="appearance.columnLines">
+                <span class="toggle-ui"></span>
+              </label>
+              <div class="settings-row" id="icon-saturation-row" hidden>
+                <span>Icon saturation</span>
+                <label class="sat-field">
+                  <input type="range" min="0" max="100" step="1" data-setting="appearance.iconSaturation" value="100">
+                  <span class="sat-value" id="icon-saturation-value">100%</span>
+                </label>
+              </div>
+            </div>
+          </section>
+
+        </div>
+        <div class="settings-footer">
+          <button class="btn btn-secondary" id="btn-settings-reset">Restore defaults</button>
+          <button class="btn btn-primary" id="btn-settings-done">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/settings.js"></script>
+</body>
+</html>
