@@ -69,7 +69,7 @@ Download an **entire playlist** in one go with full control over:
 - Audio-only mode (perfect for music playlists)
 
 <p align="center">
-  <img src="pic/Full Playlist Downloads/Screenshot 2026-11-18 073230.png" alt="Full Playlist Downloads" width="600">
+  <img src="pic/-Full Playlist Downloads-/Screenshot 2026-11-18 073230.png" alt="Full Playlist Downloads" width="600">
 </p>
 
 ---
