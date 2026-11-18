@@ -18,27 +18,24 @@
 
 ---
 
-## 💡 The Vision
+## My idea
 
-The idea is simple: **one program that downloads everything** — files, videos, audio, playlists — without depending on any external software.
+The idea is simple: **one program that downloads everything** — files, videos, audio, playlists and whatever — without depending on any external program.
 
-Zetta is still **under active development** and there is a lot more to come, but here's what it can already do today.
+Zetta is still **under active development** and there is a lot more to develop, but here's what it already done.
 
 > [!NOTE]
 > This is **not open source**. What you see here is only a portion of the source code, not the full codebase.
 
 ---
 
-## ✨ What You Get Right Now
+##  What You Get Right Now
 
-### 🚀 Full-Speed File Downloads
+### Full-Speed File Downloads
 Download any file from any website at your **maximum internet speed**. Many download managers can't handle every site — that's why IDM has stayed relevant for so long. Zetta is built to change that: delivering **IDM-level (and beyond) download quality, completely free**. I believe what's already here surpasses IDM in several ways.
 
-<p align="center">
-  <img src="src/assets/ui/xjay/all-downloads.png" alt="All Downloads" width="700">
-</p>
 
-### 🎬 Video Downloads — Straight From Your Browser
+###  Video Downloads — Straight From Your Browser
 See a video playing in your browser? **Grab it directly.**
 
 - **Multiple dubs?** Pick the dubbing language you want
@@ -46,27 +43,21 @@ See a video playing in your browser? **Grab it directly.**
 - **Audio quality?** Select the bitrate that suits you
 - **Transcript available?** Download it right alongside the video
 
-<p align="center">
-  <img src="src/assets/ui/xjay/grabber.png" alt="Video Grabber" width="700">
-</p>
 
-### 📋 Full Playlist Downloads
+###  Full Playlist Downloads
 Download an **entire playlist** in one go with full control over:
 
 - Video quality selection
 - Audio quality selection
 - Audio-only mode (perfect for music playlists)
 
-<p align="center">
-  <img src="src/assets/ui/xjay/add-playlist.png" alt="Playlist Download" width="700">
-</p>
 
-### 🎵 Audio Downloads
+###  Audio Downloads
 Need just the audio? Zetta handles that too — download audio tracks directly with quality control.
 
 ---
 
-## 📸 Screenshots
+##  Screenshots
 
 <p align="center">
   <img src="src/assets/ui/xjay/add-url.png" alt="Add URL" width="700">
@@ -90,51 +81,13 @@ Need just the audio? Zetta handles that too — download audio tracks directly w
 
 ---
 
-## 🔧 Setup
-
-```bash
-npm install
-npm run dev
-```
-
 ## 🌐 Browser Extension
 
 1. Open `chrome://extensions`
 2. Enable **Developer Mode**
 3. Click **Load Unpacked** → select the `ext/` folder
-4. Run `npm run install-host` to register native messaging
 
 ---
 
-## 🗂️ Project Structure
+This project is under development. Stay tuned.
 
-```
-app/               → Electron main process, preload, tray, IPC
-core/
-  engine/          → Download engine, segmentation, merger, speed tracker
-    protocols/     → HTTP, HLS, FTP handlers
-  queue/           → Queue manager, scheduler
-  video/           → Video sniffer, yt-dlp extractor
-  storage/         → JSON database, settings, category classifier
-  clipboard/       → Clipboard URL monitor
-  native-host/     → Named pipe server + Chrome manifest
-ext/               → Chrome MV3 extension (background, content, popup)
-src/
-  index.html       → Main window
-  css/index.css    → Design system
-  js/app.js        → Renderer logic
-scripts/           → Install helpers
-bin/               → ffmpeg & yt-dlp binaries
-```
-
----
-
-## 🚧 Roadmap
-
-This project is under heavy development. Many features are planned and on the way. Stay tuned.
-
----
-
-<p align="center">
-  Made with ❤️ by <a href="https://github.com/X-Jay512">XJay5</a>
-</p>
