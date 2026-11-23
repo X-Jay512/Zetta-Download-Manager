@@ -1,7 +1,7 @@
 # Zetta Download Manager
 
 <p align="center">
-  <img src="src/assets/icons/app.ico" alt="Zetta Download Manager" width="128">
+  <img src="JS/src/assets/icons/app.ico" alt="Zetta Download Manager" width="128">
 </p>
 
 <p align="center">
@@ -41,13 +41,13 @@ See a video playing in your browser? **Grab it directly.**
 - **Multiple dubs** Pick the dubbing language you want
 
 <p align="center">
-  <img src="pic/Multiple%20dubs/Screenshot%202026-11-13%20065859.png" alt="Multiple Dubs Selection" width="350">
+  <img src="JS/pic/Multiple%20dubs/Screenshot%202026-11-13%20065859.png" alt="Multiple Dubs Selection" width="350">
 </p>
 
 - **Video quality** Choose your preferred resolution
 
 <p align="center">
-  <img src="pic/Video%20quality/Screenshot%202026-11-13%20065938.png" alt="Video Quality Selection" width="350">
+  <img src="JS/pic/Video%20quality/Screenshot%202026-11-13%20065938.png" alt="Video Quality Selection" width="350">
 </p>
 
 - **Audio quality** Select the bitrate that suits you
@@ -55,7 +55,7 @@ See a video playing in your browser? **Grab it directly.**
 - **Transcript available** Download it right alongside the video
 
 <p align="center">
-  <img src="pic/Transcript%20available/Screenshot%202026-11-13%20070031.png" alt="Transcript Download" width="350">
+  <img src="JS/pic/Transcript%20available/Screenshot%202026-11-13%20070031.png" alt="Transcript Download" width="350">
 </p>
 
 ###  Audio Downloads
@@ -69,7 +69,7 @@ Download an **entire playlist** in one go with full control over:
 - Audio-only mode 
 
 <p align="center">
-  <img src="pic/-Full%20Playlist%20Downloads-/Screenshot%202026-11-18%20073230.png" alt="Full Playlist Downloads" width="600">
+  <img src="JS/pic/-Full%20Playlist%20Downloads-/Screenshot%202026-11-18%20073230.png" alt="Full Playlist Downloads" width="600">
 </p>
 
 ---
@@ -78,20 +78,20 @@ Download an **entire playlist** in one go with full control over:
 
 <table>
   <tr>
-    <td width="50%"><img src="pic/screenshots/Screenshot%202026-11-13%20070120.png"></td>
-    <td width="50%"><img src="pic/screenshots/Screenshot%202026-11-13%20070308.png"></td>
+    <td width="50%"><img src="JS/pic/screenshots/Screenshot%202026-11-13%20070120.png"></td>
+    <td width="50%"><img src="JS/pic/screenshots/Screenshot%202026-11-13%20070308.png"></td>
   </tr>
   <tr>
-    <td width="50%"><img src="pic/screenshots/Screenshot%202026-11-13%20070338.png"></td>
-    <td width="50%"><img src="pic/screenshots/Screenshot%202026-11-13%20072142.png"></td>
+    <td width="50%"><img src="JS/pic/screenshots/Screenshot%202026-11-13%20070338.png"></td>
+    <td width="50%"><img src="JS/pic/screenshots/Screenshot%202026-11-13%20072142.png"></td>
   </tr>
 </table>
 
 <table>
   <tr>
-    <td width="33%"><img src="pic/screenshots/Screenshot%202026-11-13%20070441.png"></td>
-    <td width="33%"><img src="pic/screenshots/Screenshot%202026-11-13%20070456.png"></td>
-    <td width="33%"><img src="pic/screenshots/Screenshot%202026-11-13%20070509.png"></td>
+    <td width="33%"><img src="JS/pic/screenshots/Screenshot%202026-11-13%20070441.png"></td>
+    <td width="33%"><img src="JS/pic/screenshots/Screenshot%202026-11-13%20070456.png"></td>
+    <td width="33%"><img src="JS/pic/screenshots/Screenshot%202026-11-13%20070509.png"></td>
   </tr>
 </table>
 
