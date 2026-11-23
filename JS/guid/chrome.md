@@ -10,6 +10,10 @@ Copy path in Zetta Download Manager copies the extension folder. Install opens `
 
    ![Chrome extensions page with Developer mode and Load unpacked highlighted](chrome%20install/Screenshot%202026-11-13%20132340.png)
 
-3. Paste the copied path into the Folder box at the bottom, then press Select Folder.
+3. In Zetta Download Manager, press Copy path on the Google Chrome row.
+
+   ![Extension Setup with Copy path highlighted on Google Chrome](chrome%20install/copy-path.png)
+
+4. Paste the copied path into the Folder box at the bottom, then press Select Folder.
 
    ![Folder picker with the Folder box highlighted](chrome%20install/Screenshot%202026-11-13%20132520.png)
