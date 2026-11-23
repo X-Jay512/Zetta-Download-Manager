@@ -13,8 +13,8 @@
     "install-host": "node scripts/install-host.js",
     "pack:ext": "node scripts/pack-ext.js"
   },
-  "author": "XJay5",
-  "license": "MIT",
+  "author": "X-Jay512",
+  "license": "SEE LICENSE IN license.txt",
   "devDependencies": {
     "cross-env": "^7.0.3",
     "electron": "^32.0.0",
@@ -82,7 +82,8 @@
       "runAfterFinish": true,
       "installerIcon": "src/assets/icons/app.ico",
       "uninstallerIcon": "src/assets/icons/app.ico",
-      "include": "scripts/nsis-hooks.nsh"
+      "include": "scripts/nsis-hooks.nsh",
+      "license": "license.txt"
     },
     "extraResources": [
       {

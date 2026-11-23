@@ -1,0 +1,62 @@
+ZETTA DOWNLOAD MANAGER
+Proprietary Software License
+
+Copyright (c) 2026 X-Jay512. All rights reserved.
+
+This license covers Zetta Download Manager, its source code, its builds,
+and its original artwork (together, the "Software"). X-Jay512 is the owner
+of the Software, of the name "Zetta Download Manager", and of its logo.
+
+1. Ownership
+The Software is proprietary. X-Jay512 owns the code and the program.
+This license does not sell or transfer that ownership.
+
+2. Free use
+The program is free. Use of the program is completely free.
+
+3. Sharing
+You may redistribute the program. You may not sell it. You may not
+charge any price for it, and you may not include it in anything
+that is sold.
+
+4. The code
+You may not use the source code without X-Jay512's prior written
+permission. You may not copy it, change it, build from it, or put
+any part of it into another program.
+
+5. Reverse engineering
+You may not reverse engineer the Software. You may not decompile it,
+disassemble it, or try to recover its source code, its design, or
+its download logic. This prohibition is absolute.
+
+6. Name and logo
+The name "Zetta Download Manager" and the logo are the property of
+X-Jay512. You may not use either of them in another program, product,
+site, or any other material, and you may not copy or imitate them.
+
+7. Third-party components
+The program is built with the components below. They are not part of
+X-Jay512's code. Each one stays under its own license. Nothing in this
+license removes the rights those licenses give for that component alone.
+
+Linked or bundled with the program:
+- Qt 6, by The Qt Company, under the GNU Lesser General Public License v3
+- curl 8.23.0, under the curl license
+- nghttp2, nghttp3, and ngtcp2, under the MIT License
+- LibreSSL, under the LibreSSL license
+- libssh2, under the BSD 3-Clause License
+- libpsl, under the MIT License
+- zlib, under the zlib license
+- Zstandard, under the BSD License
+- Brotli, under the MIT License
+- nlohmann/json, by Niels Lohmann, under the MIT License
+- Microsoft WebView2, under Microsoft's license
+- The MinGW-w64 runtime, under the GCC Runtime Library Exception
+
+Separate tools the program may call:
+- yt-dlp, under the Unlicense
+- FFmpeg, under the license shipped with that FFmpeg build
+
+8. End of permission
+If you break this license, your permission to use the Software ends.
+Sections 1, 4, 5, and 6 stay in force.
