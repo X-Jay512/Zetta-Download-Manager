@@ -13,7 +13,9 @@
     <img src="https://img.shields.io/github/v/release/X-Jay512/Zetta-Download-Manager?style=for-the-badge&color=blue" alt="Latest Release">
   </a>
   <img src="https://img.shields.io/badge/platform-Windows-0078D4?style=for-the-badge&logo=windows" alt="Windows">
-  <img src="https://img.shields.io/badge/license-Proprietary-red?style=for-the-badge" alt="License">
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/license-Proprietary-red?style=for-the-badge" alt="License">
+  </a>
 </p>
 
 ---
@@ -99,9 +101,11 @@ Download an **entire playlist** in one go with full control over:
 
 ##  Browser Extension
 
-1. Open `chrome://extensions`
-2. Enable **Developer Mode**
-3. Click **Load Unpacked** → select the `ext/` folder
+**Firefox and every Firefox-based browser** are supported. Install the add-on from [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/zetta-download-manager/).
+
+**Chromium browsers such as Brave and Edge:** press **Install** inside the program.
+
+**Google Chrome** is not in the Chrome Web Store yet, so the extension has to be added by hand. Follow the [Chrome guide](JS/guid/chrome.html).
 
 ---
 
