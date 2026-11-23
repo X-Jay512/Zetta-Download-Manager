@@ -105,7 +105,7 @@ Download an **entire playlist** in one go with full control over:
 
 **Chromium browsers such as Brave and Edge:** press **Install** inside the program.
 
-**Google Chrome** is not in the Chrome Web Store yet, so the extension has to be added by hand. Follow the [Chrome guide](JS/guid/chrome.html).
+**Google Chrome** is not in the Chrome Web Store yet, so the extension has to be added by hand. Follow the [Chrome guide](JS/guid/chrome.md).
 
 ---
 
