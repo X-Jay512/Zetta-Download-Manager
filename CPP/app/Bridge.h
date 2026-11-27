@@ -1,5 +1,5 @@
 #pragma once
-// C++ replacement of window.flashDM (preload bridge).
+// C++ stand-in for the preload bridge.
 // Same channel names as the JS code, so wiring your real engine (the C++ HLS handler etc.) is 1:1.
 #include <QtCore>
 #include <functional>
