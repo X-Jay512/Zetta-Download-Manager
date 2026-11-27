@@ -43,4 +43,3 @@ These files exist so the shape is visible. The working code stays in the private
 | `core/crx-pack.js` | `core/browser/crx_pack.cpp` |
 | `ext/`, `ext f/` | not included |
 
-The download engine, the site capture, the segment writer, and the string-encryption key are not in this folder.
